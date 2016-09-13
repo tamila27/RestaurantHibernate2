@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--<tx:annotation-driven transaction-manager="txManager" proxy-target-class="true"/>-->
+
+    <bean id="main" class="com.goit.gojavaonline.Main" init-method="init">
+        <property name="reInit" value="true" />
+        <property name="employeeController" ref="employeeController"/>
+        <property name="dishController" ref="dishController"/>
+        <property name="orderController" ref="orderController"/>
+        <property name="preparedDishController" ref="preparedDishController"/>
+        <property name="ingredientController" ref="ingredientController"/>
+        <property name="storageController" ref="storageController"/>
+
+        <!--<property title="menuController" ref="menuController"/>-->
+    </bean>
+
+    <bean id="employeeController" class="com.goit.gojavaonline.controllers.EmployeeController">
+        <property name="employeeDao" ref="employeeDao"/>
+    </bean>
+    <bean id="employeeDao" class="com.goit.gojavaonline.model.dao.hibernate.HEmployeeDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="dishController" class="com.goit.gojavaonline.controllers.DishController">
+        <property name="dishDao" ref="dishDao"/>
+        <property name="storageIngredientDao" ref="storageDao"/>
+        <property name="dishIngredientDao" ref="dishIngredientDao"/>
+    </bean>
+    <bean id="dishDao" class="com.goit.gojavaonline.model.dao.hibernate.HDishDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="orderController" class="com.goit.gojavaonline.controllers.OrdersController">
+        <property name="dishDao" ref="dishDao"/>
+        <property name="orderDao" ref="orderDao"/>
+        <property name="employeeDao" ref="employeeDao"/>
+    </bean>
+
+    <bean id="orderDao" class="com.goit.gojavaonline.model.dao.hibernate.HOrderDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="ingredientController" class="com.goit.gojavaonline.controllers.IngredientController">
+        <property name="ingredientDao" ref="ingredientDao"/>
+    </bean>
+
+    <bean id="ingredientDao" class="com.goit.gojavaonline.model.dao.hibernate.HIngredientDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="storageController" class="com.goit.gojavaonline.controllers.StorageController">
+        <property name="storageDao" ref="storageDao"/>
+        <property name="ingredientDao" ref="ingredientDao"/>
+    </bean>
+    <bean id="storageDao" class="com.goit.gojavaonline.model.dao.hibernate.HStorageDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="preparedDishController" class="com.goit.gojavaonline.controllers.PreparedDishController">
+        <property name="preparedDishDao" ref="preparedDishDao"/>
+        <property name="employeeDao" ref="employeeDao"/>
+        <property name="dishDao" ref="dishDao"/>
+        <property name="orderDao" ref="orderDao"/>
+        <property name="storageDao" ref="storageDao"/>
+    </bean>
+    <bean id="preparedDishDao" class="com.goit.gojavaonline.model.dao.hibernate.HPreparedDishDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+
+    <bean id="dishIngredientDao" class="com.goit.gojavaonline.model.dao.hibernate.HDishIngredientsDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+
+    <!--<bean id="menuController" class="com.goit.gojavaonline.controllers.MenuController">
+        <property title="menuDao" ref="menuDao"/>
+    </bean>
+    <bean id="menuDao" class="com.goit.gojavaonline.model.dao.hibernate.HMenuDao">
+        <property title="sessionFactory" ref="sessionFactory"/>
+    </bean>-->
+
+</beans>
